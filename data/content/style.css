@@ -1,0 +1,15 @@
+@import 'bootstrap.css';
+@import 'bootstrap-responsive.css';
+
+
+h1 {
+  font-size:200px;
+}
+
+#listview tr {
+  border-left: 5px none #9C0001;
+}
+
+.share {
+  display: none;
+}
