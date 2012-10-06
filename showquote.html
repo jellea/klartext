@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Klartext - Kindle Clippings Manager</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id='quoteview' class="container">
+    </div>
+    <script src="javascripts/jquery-1.8.2.min.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script>
+      //http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values
+      function getParameterByName(name) 
+      {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if(results == null)
+          return "";
+        else
+          return decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+      var elem = ['text','author','title']
+      for (var i in elem){
+        // Add quote to DOM
+        $('<h3 class='+elem[i]+'>'+getParameterByName(elem[i])+'</h3>').appendTo('#quoteview');
+      }
+      if (getParameterByName('title') != ""){
+        // Get Cover
+        //$.get('http://webservices.amazon.com/onca/json', 
+        //AWSAccessKeyId=AKIAIXYT5QCUHLBFAEHQ
+        //http://webservices.amazon.com/onca/xml?
+        //Service=AWSECommerceService&
+        //AWSAccessKeyId=[AWS Access Key ID]&
+        //Operation=ItemSearch&
+        //ItemId=B000Q678OO&
+        //ResponseGroup=Images&
+        //SearchIndex=Blended&
+        //Version=2011-08-01
+        //&Timestamp=[YYYY-MM-DDThh:mm:ssZ]
+        //&Signature=[Request Signature]
+      }
+    </script>
+  </body>
+</html>
+
