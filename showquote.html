@@ -23,7 +23,8 @@
         if(results == null)
           return "";
         else
-          return decodeURIComponent(results[1].replace(/\+/g, " "));
+          return decodeURIComponent(unescape(results[1].replace(/\+/g,
+        "").replace("%u2019","'")));
       }
       var elem = ['text','author','title']
       for (var i in elem){
