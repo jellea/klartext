@@ -79,7 +79,7 @@
         processData: false,
         success: function(data) {
           console.log(data);
-          return window.open(sm.twitter + data);
+          return window.open(sm.twitter + data.id);
         }
       });
     } else {
