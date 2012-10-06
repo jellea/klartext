@@ -82,10 +82,9 @@
         if (media === 'twitter' && ("" + text + " -" + author + " in " + title).length > 140) {
           maxlengthquote = 140 - shorturl.id.length - 9;
           text = "\"" + (text.substr(0, maxlengthquote)) + "...\" -";
-          return window.open("http://twitter.com/share?text=" + text + "&url=" + shorturl.id);
-        } else {
-          return window.open(sm[media]);
+          sm.twitter = "http://twitter.com/share?text=" + text + "&url=" + shorturl.id;
         }
+        return window.open(sm[media]);
       }
     });
   };
@@ -175,7 +174,7 @@
       if (err) {
         console.log(err);
         return fs.watchFile(path, function(curr, prev) {
-          return console.log(curr);
+          return readKindle(path);
         });
       } else {
         fs.readFile(path + '.backup', 'utf-8', function(err, data) {
