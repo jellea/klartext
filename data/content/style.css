@@ -3,13 +3,61 @@
 
 
 h1 {
-  font-size:200px;
+  font-size:            200px;
+  line-height:          1em;
+  margin:               70px 0 10px 0;
+  position:             relative;
+  overflow:             hidden;
 }
 
-#listview tr {
-  border-left: 5px none #9C0001;
+h1 span{
+  color:                #F7F7F7;
+}
+
+#listview h2 {
+  border-left:          5px solid #9C0001;
+  padding-left:         15px;
+  margin:               0 0 10px 0;
+}
+
+#listview td
+{
+  position:             relative;
+  padding-top:          20px;
+  padding-bottom:       20px;
 }
 
 .share {
-  display: none;
+  display:              none;
+  position:             absolute;
+  background:           #9C0001;
+  width:                100%;
+  left:                 0;
+  height:               100%;
+  top:                  0;
+  /*margin-top:           1em;*/
+  text-align:           center;
+}
+.buttons {
+  position:             relative;
+  top:                  50%;
+  margin-top:           -36px;
+}
+
+
+.share a {
+  border:               0;
+  text-decoration:      none;
+  margin:               0;
+}
+.share svg {
+  fill: #FAFDFA;
+}
+
+#seeall{
+  cursor: pointer;
+}
+
+svg:hover {
+    fill: #282828;
 }

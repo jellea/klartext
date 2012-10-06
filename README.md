@@ -1,0 +1,2 @@
+# Klartext
+The thing I love most about my Kindle is the highlight and note feature. It’s a pity there isn’t a way to manage and share them in an easy way. After fiddling around in python with some cli batch scripts I decided to make a more user friendly and go for a proper user interface.
