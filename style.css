@@ -3,14 +3,14 @@
 
 
 h1 {
-  font-size:            200px;
+  font-size:            10em;
   line-height:          1em;
   margin:               70px 0 10px 0;
   position:             relative;
   overflow:             hidden;
 }
 
-h1 span{
+h1 span,h3 span{
   color:                #E9E9E9;
 }
 
@@ -72,3 +72,19 @@ svg:hover {
 #nosupport {
   display:none;
 }
+
+#quoteview .text {
+  font-size: 3em;
+  line-height: 1.5em;
+}
+#quoteview .author {
+  text-align:right;
+  font-size: 1.5em;
+  line-height: 1em;
+}
+#quoteview .title {
+  text-align:right;
+  font-size: 1.5em;
+  line-height: 1em;
+}
+

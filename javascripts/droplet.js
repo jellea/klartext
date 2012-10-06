@@ -61,32 +61,32 @@
   };
 
   shareQuote = function(media, message) {
-    var author, sm, text, title;
+    var author, text, title;
     title = message.get('title');
     author = message.get('author');
     text = message.get('text');
-    sm = {
-      facebook: "https://www.facebook.com/dialog/feed?\napp_id=152073644937064&\npicture=http://f.cl.ly/items/0A1R3h3P1Y1v3j3Z2P3E/quotes.png&\nname=" + text + "&\ncaption=" + author + "%20in%20" + title + "&\nredirect_uri=http://jellea.github.com/klartext/posted.html",
-      twitter: "http://twitter.com/share?text=" + text + "%20-%20" + author + "%20in%20" + title + "&url=",
-      tumblr: "http://www.tumblr.com/share/quote\n?source=" + author + "%20in%20" + title + "\n&quote=" + text
-    };
-    if (media === 'twitter' && ("" + text + " -" + author + " in " + title).length > 140) {
-      return $.ajax({
-        type: 'POST',
-        url: 'https://www.googleapis.com/urlshortener/v1/url',
-        data: "{'longUrl':'http://jellea.github.com/klartext/showquote.html?text=" + (escape(text)) + "&author=" + (escape(author)) + "&title=" + (escape(title)) + "'}",
-        contentType: 'application/json',
-        processData: false,
-        success: function(shorturl) {
-          var maxlengthquote;
+    return $.ajax({
+      type: 'POST',
+      url: 'https://www.googleapis.com/urlshortener/v1/url',
+      data: "{'longUrl':'http://jellea.github.com/klartext/showquote.html?text=" + (escape(text)) + "&author=" + (escape(author)) + "&title=" + (escape(title)) + "'}",
+      contentType: 'application/json',
+      processData: false,
+      success: function(shorturl) {
+        var maxlengthquote, sm;
+        sm = {
+          facebook: "https://www.facebook.com/dialog/feed?\napp_id=152073644937064&\nlink=" + shorturl.id + "&\npicture=http://f.cl.ly/items/0A1R3h3P1Y1v3j3Z2P3E/quotes.png&\nname=" + text + "&\ncaption=" + author + "%20in%20" + title + "&\nredirect_uri=http://jellea.github.com/klartext/posted.html",
+          twitter: "http://twitter.com/share?text=" + text + "%20-%20" + author + "%20in%20" + title + "&url=",
+          tumblr: "http://www.tumblr.com/share/quote\n?source=" + author + "%20in%20" + title + "\n&quote=" + text
+        };
+        if (media === 'twitter' && ("" + text + " -" + author + " in " + title).length > 140) {
           maxlengthquote = 140 - shorturl.id.length - 9;
           text = "\"" + (text.substr(0, maxlengthquote)) + "...\" -";
           return window.open("http://twitter.com/share?text=" + text + "&url=" + shorturl.id);
+        } else {
+          return window.open(sm[media]);
         }
-      });
-    } else {
-      return window.open(sm[media]);
-    }
+      }
+    });
   };
 
   parseClippings = function(data) {
