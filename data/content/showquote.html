@@ -7,6 +7,8 @@
   </head>
   <body>
     <div id='quoteview' class="container">
+      <div id='quotes'></div>
+      <h3>k</h3>
     </div>
     <script src="javascripts/jquery-1.8.2.min.js"></script>
     <script src="javascripts/bootstrap.min.js"></script>
@@ -21,12 +23,13 @@
         if(results == null)
           return "";
         else
-          return decodeURIComponent(results[1].replace(/\+/g, " "));
+          return decodeURIComponent(unescape(results[1].replace(/\+/g,
+        "").replace("%u2019","'")));
       }
       var elem = ['text','author','title']
       for (var i in elem){
         // Add quote to DOM
-        $('<h3 class='+elem[i]+'>'+getParameterByName(elem[i])+'</h3>').appendTo('#quoteview');
+        $('<h3 class='+elem[i]+'>'+getParameterByName(elem[i])+'</h3>').appendTo('#quotes');
       }
       if (getParameterByName('title') != ""){
         // Get Cover
@@ -44,6 +47,20 @@
         //&Signature=[Request Signature]
       }
     </script>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-35360120-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
   </body>
 </html>
 

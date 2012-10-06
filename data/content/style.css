@@ -3,15 +3,15 @@
 
 
 h1 {
-  font-size:            200px;
+  font-size:            10em;
   line-height:          1em;
   margin:               70px 0 10px 0;
   position:             relative;
   overflow:             hidden;
 }
 
-h1 span{
-  color:                #F7F7F7;
+h1 span,h3 span{
+  color:                #E9E9E9;
 }
 
 #listview h2 {
@@ -44,6 +44,14 @@ h1 span{
   margin-top:           -36px;
 }
 
+#dropzone{
+  margin:               3em 1em 1em auto;
+  border:               8px dashed #E9E9E9;
+  width:                auto;
+  display:              inline-block;
+  padding:              40px;
+  border-radius:        15px;
+}
 
 .share a {
   border:               0;
@@ -51,13 +59,47 @@ h1 span{
   margin:               0;
 }
 .share svg {
-  fill: #FAFDFA;
+  fill:                 #FAFDFA;
 }
 
 #seeall{
-  cursor: pointer;
+  cursor:               pointer;
 }
 
 svg:hover {
-    fill: #282828;
+  fill:                 #282828;
+}
+#nosupport {
+  display:              none;
+}
+
+#quoteview .text {
+  font-size:            3em;
+  line-height:          1.5em;
+}
+#quoteview h3{
+  text-align:           right;
+  font-size:            1.5em;
+  line-height:          1em;
+}
+
+#quoteview .author {
+
+}
+#quoteview .title {
+}
+
+
+@media (max-width: 430px) {
+  #dropview > h2, #dropview > h1, #dropzone small{
+    display:none;
+  }
+  #dropzone{
+    width: 90%;
+    height: 80%;
+    margin: 20px 0 0 0;
+    box-sizing: border-box;
+    position: absolute;
+  }
+
 }
