@@ -41,7 +41,10 @@
 
     'click .sharebutton': (event) ->
       console.log event
-      media = event.target.parentElement.id
+      if event.target.childElementCount == 0
+        media = event.target.parentElement.parentElement.id
+      else 
+        media = event.target.parentElement.id
       console.log(media)
       shareQuote media, @.model
 
@@ -76,12 +79,24 @@ shareQuote = (media, message) ->
               name=#{ text }&
               caption=#{ author }%20in%20#{ title}
               redirect_uri=http://jellea.github.com/klartext/posted.html"""
-    twitter:  "http://twitter.com/share?text=#{ text }%20-%20#{ author }%20in%20#{ title}"
+    twitter:  "http://twitter.com/share?text=#{ text }%20-%20#{ author }%20in%20#{ title }&url="
     tumblr:   """http://www.tumblr.com/share/quote
               ?source=#{ author }%20in%20#{ title}
               &quote=#{ text }"""
-
-  window.open(sm[media])
+  
+  if media=='twitter' and "#{ text } -#{ author } in #{ title }".length > 144
+      $.ajax({
+        type: 'POST',
+        url: 'https://www.googleapis.com/urlshortener/v1/url',
+        data: "{'longUrl':'http://jellea.github.com/klartext/showquote.html?text=#{text}&author=#{author}&title=#{title}'}",
+        contentType: 'application/json',
+        processData: false,
+        success: (data) ->
+          console.log data
+          window.open(sm.twitter+data)
+      })
+  else
+    window.open(sm[media])
 
 parseClippings = (data) ->
   # Borrowed jplattel's python script for parsing the text file
