@@ -84,13 +84,30 @@
           text = "\"" + (text.substr(0, maxlengthquote)) + "...\" -";
           sm.twitter = "http://twitter.com/share?text=" + text + "&url=" + shorturl.id;
         }
-        return window.open(sm[media]);
+        if ((typeof exec !== "undefined" && exec !== null)) {
+          return exec("open " + sm[media], function(error, stdout, stderr) {
+            if (error !== null) {
+              return console.log("exec error: " + error);
+            }
+          });
+        } else {
+          return window.open(sm[media]);
+        }
       }
     });
   };
 
   parseClippings = function(data) {
     var clip, clipping, clippings, note, _i, _len;
+    fs.unwatchFile(window.path);
+    $('#dropview').slideUp(500, function() {
+      return $(window.frame).animate({
+        height: 600,
+        width: 900
+      }, 350, function() {
+        return $('#listview').slideDown(500);
+      });
+    });
     clippings = data.split('==========');
     window.notes = [];
     for (_i = 0, _len = clippings.length; _i < _len; _i++) {
@@ -109,15 +126,7 @@
       }
     }
     showBooks();
-    displayClippings(window.notes);
-    return $('#dropview').slideUp(500, function() {
-      return $(window.frame).animate({
-        height: 600,
-        width: 900
-      }, 350, function() {
-        return $('#listview').slideDown(500);
-      });
-    });
+    return displayClippings(window.notes);
   };
 
   showBooks = function() {
@@ -188,15 +197,13 @@
   };
 
   $(window).on('app-ready', function() {
-    var osxpath;
     window.fs = window.require("fs");
-    osxpath = '/Volumes/Kindle/documents/My\ Clippings.txt';
-    return readKindle(osxpath);
+    window.path = '/Volumes/Kindle/documents/My\ Clippings.txt';
+    return readKindle(path);
   });
 
   uploadFiles = function(files) {
     var reader;
-    console.log(files);
     if (files[0].type === "text/plain" && files[0].name === "My Clippings.txt") {
       console.log("test passed!");
       reader = new FileReader();
@@ -205,8 +212,8 @@
         return $('#listview').slideDown(500, false);
       });
       reader.readAsText(files[0]);
+      return false;
     }
-    return false;
   };
 
   this.init = function() {
