@@ -77,7 +77,7 @@ shareQuote = (media, message) ->
               app_id=152073644937064&
               picture=http://f.cl.ly/items/0A1R3h3P1Y1v3j3Z2P3E/quotes.png&
               name=#{ text }&
-              caption=#{ author }%20in%20#{ title}
+              caption=#{ author }%20in%20#{ title}&
               redirect_uri=http://jellea.github.com/klartext/posted.html"""
     twitter:  "http://twitter.com/share?text=#{ text }%20-%20#{ author }%20in%20#{ title }&url="
     tumblr:   """http://www.tumblr.com/share/quote
