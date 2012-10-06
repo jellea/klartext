@@ -30,7 +30,11 @@
       'click .sharebutton': function(event) {
         var media;
         console.log(event);
-        media = event.target.parentElement.id;
+        if (event.target.childElementCount === 0) {
+          media = event.target.parentElement.parentElement.id;
+        } else {
+          media = event.target.parentElement.id;
+        }
         console.log(media);
         return shareQuote(media, this.model);
       },
@@ -62,11 +66,25 @@
     author = message.get('author');
     text = message.get('text');
     sm = {
-      facebook: "https://www.facebook.com/dialog/feed?\napp_id=152073644937064&\npicture=http://f.cl.ly/items/0A1R3h3P1Y1v3j3Z2P3E/quotes.png&\nname=" + text + "&\ncaption=" + author + "%20in%20" + title + "\nredirect_uri=http://jellea.github.com/klartext/posted.html",
-      twitter: "http://twitter.com/share?text=" + text + "%20-%20" + author + "%20in%20" + title,
+      facebook: "https://www.facebook.com/dialog/feed?\napp_id=152073644937064&\npicture=http://f.cl.ly/items/0A1R3h3P1Y1v3j3Z2P3E/quotes.png&\nname=" + text + "&\ncaption=" + author + "%20in%20" + title + "&\nredirect_uri=http://jellea.github.com/klartext/posted.html",
+      twitter: "http://twitter.com/share?text=" + text + "%20-%20" + author + "%20in%20" + title + "&url=",
       tumblr: "http://www.tumblr.com/share/quote\n?source=" + author + "%20in%20" + title + "\n&quote=" + text
     };
-    return window.open(sm[media]);
+    if (media === 'twitter' && ("" + text + " -" + author + " in " + title).length > 144) {
+      return $.ajax({
+        type: 'POST',
+        url: 'https://www.googleapis.com/urlshortener/v1/url',
+        data: "{'longUrl':'http://jellea.github.com/klartext/showquote.html?text=" + text + "&author=" + author + "&title=" + title + "'}",
+        contentType: 'application/json',
+        processData: false,
+        success: function(data) {
+          console.log(data);
+          return window.open(sm.twitter + data);
+        }
+      });
+    } else {
+      return window.open(sm[media]);
+    }
   };
 
   parseClippings = function(data) {
