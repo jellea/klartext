@@ -99,7 +99,9 @@
 
   parseClippings = function(data) {
     var clip, clipping, clippings, note, _i, _len;
-    fs.unwatchFile(window.path);
+    try {
+      fs.unwatchFile(window.path);
+    } catch (_error) {}
     $('#dropview').slideUp(500, function() {
       return $(window.frame).animate({
         height: 600,
@@ -179,21 +181,23 @@
   });
 
   readKindle = function(path) {
-    return fs.readFile(path, 'utf-8', function(err, data) {
-      if (err) {
-        console.log(err);
-        return fs.watchFile(path, function(curr, prev) {
-          return readKindle(path);
-        });
-      } else {
-        fs.readFile(path + '.backup', 'utf-8', function(err, data) {
-          if (err) {
-            return fs.writeFile(path + '.backup', data, 'utf-8');
-          }
-        });
-        return parseClippings(data);
-      }
-    });
+    try {
+      return fs.readFile(path, 'utf-8', function(err, data) {
+        if (err) {
+          console.log(err);
+          return fs.watchFile(path, function(curr, prev) {
+            return readKindle(path);
+          });
+        } else {
+          fs.readFile(path + '.backup', 'utf-8', function(err, data) {
+            if (err) {
+              return fs.writeFile(path + '.backup', data, 'utf-8');
+            }
+          });
+          return parseClippings(data);
+        }
+      });
+    } catch (_error) {}
   };
 
   $(window).on('app-ready', function() {
