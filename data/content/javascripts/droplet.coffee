@@ -113,7 +113,8 @@ shareQuote = (media, message) ->
         window.open(sm[media])
 
 parseClippings = (data) ->
-  fs.unwatchFile window.path
+  try
+    fs.unwatchFile window.path
   # Borrowed jplattel's python script for parsing the text file
   # original url: https://gist.github.com/1071682
 
@@ -168,17 +169,18 @@ $('#seeall').click ->
   displayClippings window.notes
 
 readKindle = (path) ->
-  fs.readFile path, 'utf-8', (err, data) ->
-      if (err)
-        console.log err
-        fs.watchFile path, (curr, prev) ->
-          readKindle path
-      else
-        #Backup in case I might destroy something
-        fs.readFile path+'.backup', 'utf-8', (err, data) ->
-          if (err)
-            fs.writeFile path+'.backup', data, 'utf-8'
-        parseClippings data
+  try
+    fs.readFile path, 'utf-8', (err, data) ->
+        if (err)
+          console.log err
+          fs.watchFile path, (curr, prev) ->
+            readKindle path
+        else
+          #Backup in case I might destroy something
+          fs.readFile path+'.backup', 'utf-8', (err, data) ->
+            if (err)
+              fs.writeFile path+'.backup', data, 'utf-8'
+          parseClippings data
 
 
 $(window).on 'app-ready', ->
@@ -211,14 +213,14 @@ uploadFiles = (files) ->
       $('#dropzone').bind 'drop', (e) ->
         files = e.dataTransfer.files
         uploadFiles files
-      
+
       $('#dropview #try').click ->
         $.get 'My Clippings.txt', (data) ->
           parseClippings data
           $('#listview').slideDown 500
-      
+
       $('#dropview #browse').click ->
-        document.getElementById("upfile").click();
+        document.getElementById("upfile").click()
 
       $('#dropzone').bind 'drop', ->
         return false
