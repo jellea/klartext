@@ -10,3 +10,7 @@ Only tested with Kindle 3 clippings, searching for others!**
 There’s a web and a desktop version. The web version is as complete as the desktop version except for the Kindle auto detect function. Open the app, plugin your kindle and you’re ready to share!
 
 Thanks [jplattel](https://github.com/jplattel) for the initial python [script](https://gist.github.com/1071682)!
+
+![screenshot1](http://jellea.github.com/klartext/images/screenshot1.png)
+![screenshot3](http://jellea.github.com/klartext/images/screenshot3.png)
+![screenshot2](http://jellea.github.com/klartext/images/screenshot2.png)
